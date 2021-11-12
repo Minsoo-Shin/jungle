@@ -19,4 +19,5 @@ while True:
     if pl > pr:
         break
 
+
 print(max(result))
