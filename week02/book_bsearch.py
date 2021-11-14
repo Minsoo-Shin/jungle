@@ -4,7 +4,7 @@ def bin_search(a, key) -> int:
 
     while True:
         pc = (pl - pr)//2 # 중앙원소의 값
-        if a[pc] ==key:
+        if a[pc] == key:
             return pc
         elif a[pc] < key:
             pl = pc + 1

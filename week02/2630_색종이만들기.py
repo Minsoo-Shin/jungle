@@ -1,42 +1,35 @@
+import sys 
+N = int(sys.stdin.readline())
 
-'''
-def check(n, array):
-    maximum=max([map(max, array)])
-    minimum=min([map(min, array)])
-    m = n//2
-    if maximum != minimum:
-        return 3 #나눠야함
-    else:
-        return 0 #나눌필요 없음
+matrix = []
+for i in range(N):
+    matrix.append(list(map(int, sys.stdin.readline().strip().split())))
 
-print(check(8, arr))
-'''
-def cut(n)
-    for r in range(n):
-        for c in range(n):
-            color = arr[0][0]
-            if arr[r][c] == color:
-                continue
-            else:
-                
+count_one = 0
+count_zero = 0
 
-def check(r, c, n, m) -> int: #몇번 쪼개지나
-    if 
-    temp = arr[r:n][c:m]
-    for i in range(n-r):
-        if 0 in temp and 1 in temp:
-            return 0 #섞여 있다. 나눠야한다. 
-        else:
-            return 1 #둘다 같은게 있다
+def check(start_i, start_j, n): 
+    global count_one, count_zero 
+    type = matrix[start_i][start_j]
+    flag = True 
+    
+    for i in range(start_i, start_i + n):
+        if not flag: 
+            break 
+        for j in range(start_j, start_j + n): 
+            if type != matrix[i][j]: 
+                flag = False 
+                check(start_i, start_j, n // 2) 
+                check(start_i, start_j + n // 2, n // 2) 
+                check(start_i + n // 2, start_j, n // 2) 
+                check(start_i + n // 2, start_j + n // 2, n // 2) 
+                break
+    if flag: 
+        if type: 
+            count_one += 1 
+        else: 
+            count_zero += 1 
 
-
-import sys
-n = int(input())
-arr = [list(map(int, sys.stdin.readline().split())) for _ in range(n)]    
-
-if check(0, 0, n, n) == 1:
-    result += 1
-else:
-    while True:
-        
-        
+check(0, 0, N) 
+print(count_zero) 
+print(count_one)
