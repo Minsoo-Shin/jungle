@@ -11,4 +11,3 @@ def g(a: int,b: int, c: int):
         return temp * temp * (a % c) %c
  
 print(g(a,b,c))
-
