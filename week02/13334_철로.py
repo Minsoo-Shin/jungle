@@ -20,7 +20,7 @@ for location in commute:
         heapq.heappush(possible, location)
         # 가능한건 최소힙에 저장한다.
     while possible[0][0] < location[1] - d:
-        heapq.heappop(possible)
+        heapq.heappop(possible) 
         # 옮길때마다 삭제해야하는건 삭제한다. 
     ans = max(ans, len(possible))
 # len(possible)최대가 될때마다 갱신한다. 

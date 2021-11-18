@@ -10,6 +10,7 @@ arr.sort()
 result = 0
 start = 1
 end = arr[-1] - arr[0]
+
 while start <= end:
     mid = (start + end)//2
     current = arr[0]

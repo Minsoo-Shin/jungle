@@ -13,11 +13,7 @@ while True:
 
     for i in range(1, n+2):
         while check and heights[i] < heights[check[-1]]:
-
             cur_idx = check.pop()
-
             area = max(area, (i-1-check[-1])*heights[cur_idx])
-
         check.append(i)
-
     print(area)

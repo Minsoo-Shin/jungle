@@ -4,7 +4,7 @@ n = int(input())
 arr = list(map(int, input().split()))
 arr.sort()
 n = len(arr)
-start = max([arr[0]+arr[1], arr[-2]+arr[-1]])
+start = max([arr[0] + arr[1], arr[-2] + arr[-1]])
 
 end = 0
 result = {}
