@@ -8,20 +8,19 @@ for i in range(m):
     graph[s].append(e)
     graph[e].append(s)
 
-visited = []
+visited = [0] * (n+1)
 def DFS(graph, root):
     stack = [root]
     while stack:
         node = stack.pop()
-        if node not in visited:
-            visited.append(node)
-            stack.extend(graph[node])
+        if visited[node] == 0:
+            visited[node] = True
+            stack += graph[node]
 
 cnt = 0   
 for key in graph.keys():
-    a = visited[:] 
-    DFS(graph, key)
-    if a != visited:
+    if visited[key] == 0:
         cnt+=1
+        DFS(graph, key)
 
 print(cnt + n-len(graph))
