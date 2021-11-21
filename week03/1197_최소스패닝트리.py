@@ -30,5 +30,3 @@ for w, s, e in edge:
         ssum += w
 
 print(ssum)
-
-
