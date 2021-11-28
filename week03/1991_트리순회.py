@@ -3,9 +3,9 @@ input = sys.stdin.readline
 
 class Node: # 바이너리 트리를 구성 할 노드 클래스 생성
     def __init__(self, data):
-        self.data = data;
-        self.left = None;
-        self.right = None;
+        self.data = data
+        self.left = None
+        self.right = None
 
 def preorder(node): # 전위 순회
     print(node.data, end='')
