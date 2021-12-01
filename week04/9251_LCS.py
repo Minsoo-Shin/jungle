@@ -3,7 +3,6 @@ str2 = list(" ") + list(input())
 
 d = [[0]*len(str2) for _ in range(len(str1))]
 tracker = [[tuple() for _ in range(len(str2))] for _ in range(len(str1))]
-print(tracker)
 for i in range(1, len(str1)):
     for j in range(1, len(str2)):
         if str1[i] == str2[j]:
@@ -18,6 +17,7 @@ for i in range(1, len(str1)):
                 tracker[i][j] = (0,-1)
 
 print(d[len(str1)-1][len(str2)-1])
+
 result = str()
 i = len(str1)-1
 j = len(str2)-1 

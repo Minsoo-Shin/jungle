@@ -1,45 +1,55 @@
 '''
-평범한 배낭
+동전 문제 
 
-- 문제 설명
- > N개의 물건. 그 물건 마다의 무게 W와 가치 V가 있다. 
- > 준서는 버틸 수 있는 무게가 정해져 있다. 그 무게에서의 최대 가치를 구한다. 
+입력값)
+- 테스트 케이스 : t (10개)
+- 동전의 갯수 : n (20개 이하)
+- 동전의 종류 : unit (10000원 이내)
+- 금액 : m (10,000원 이하())
 
-- 제약 사항) 들 수 있는 무게 K
-- 요구 사항) 가치의 최대값 
+문제 분석)
+- 동전 unit 돌면서 최소 공배수이면, 따로 처리?
+  : 리스트에 있는 동전의 최소 공배수를 구하는 방법? 한번에 떠오르질 않네
+    => 동전의 경우의 수를 구하는거라 위의 방법과는 관련없음. 
+    (단지 최소 동전의 갯수를 이용할때만 사용)
+    ####################################################
+    시간 복잡도
+    : lcs 재귀함수로 log(N)미만? 따라서 종합적으로는 NlogN이 되지 않을까 생각된다.  
 
-시간 복잡도)
-물품의 수 (<100)라 물품별 모두 비교한다면, 시간 복잡도는 어떻게 될까?
+    def lcs(a,b):
+    if a % b == 0: return b
+    else: return lcs(b, a%b)
 
-유추과정)
-무게 w, 가치 v
-물품 
-   1  2  3  4  5
-w  4  6  4  3  5
-v  7 13  8  6 12 
-
-테이블 구성)
-D
-w 
-D[i][j] = max(D[i-1][j], D[i-1][)
-
+    result = 1
+    for i in units:
+        result = (result * i)/lcs(result, i)
+    if m % result == 0:
+        tmp = 0
+        # 오름차순으로 정렬되어있다는 문제의 가정에 한함
+        for i in range(len(units)-1, -1, -1):
+            tmp += m // units[i]
+            m %= units[i]
+            if m == 0:
+                break
+        print(tmp)
+    ####################################################
+- 동전 경우의 수는 작은 단위의 경우의 수를 이용해나갈 수 있다. 
 '''
 import sys
 input = sys.stdin.readline
-n, k = map(int, input().split())
-pack = [[0,0]]
-knapsack = [[0] * (k+1) for _ in range(n+1)]
 
-for i in range(n):
-    w, v = map(int, input().split())
-    pack.append([w,v])
-for i in range(1, n+1):
-    for j in range(1, k+1):
-        weight = pack[i][0]
-        value = pack[i][1]
-        if weight > j:
-            knapsack[i][j] = knapsack[i-1][j]
-        else: # 물품의 무게가 견딜수 있는 무게보다 가볍다면 고려대상
-            knapsack[i][j] = max(knapsack[i-1][j], value + knapsack[i-1][j-weight])
+t = int(input())
+for i in range(t):  
+    n = int(input())
+    units = list(map(int, input().split()))
+    m = int(input())
 
-print(knapsack[n][k])
+    D = [0] * (m+1)
+    D[0] = 1
+    
+    for unit in units:
+        for i in range(unit, m+1):
+            D[i] += D[i-unit]
+
+    print(D[m])
+

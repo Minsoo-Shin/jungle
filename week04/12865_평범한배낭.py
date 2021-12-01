@@ -39,7 +39,7 @@ for i in range(1, n+1):
         value = pack[i][1]
         if weight > j:
             knapsack[i][j] = knapsack[i-1][j]
+            
         else: # 물품의 무게가 견딜수 있는 무게보다 가볍다면 고려대상
             knapsack[i][j] = max(knapsack[i-1][j], value + knapsack[i-1][j-weight])
-
 print(knapsack[n][k])
