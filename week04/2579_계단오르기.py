@@ -1,34 +1,40 @@
-# 계단 오르는 속도는 한계단이나 두 계단씩 오를 수 있다. 
-# 연속된 세 개의 계단은 밟을 순 없다. 
-# 마지막 도착 계단은 반드시 밟아야 한다. 
+'''
+# 계단오르기
 
-# 1. 테이블 구성하기
+- 문제 설명
+ > 계단을 오르면서 각 계단의 점수를 얻는 최대값을 구하라
+ > 계단은 한 계단 or 두 계단
+ > 연속된 세 개의 계단은 모두 밟을 수 없다. 
+
+- 입력값
+ > 계단 수 : n (<=300)
+ > 계단 마다의 점수 : sco (<= 10,000)
+
+- 문제 접근
+ > 계단마다 쪼개서 최대값을 구하는 DP문제
+ > 한 계단 전 or 두 계단 전에서 최종
+ > 제약 조건은 연속된 세 개의 계단은 밟을 수 없네
+
+점화식은 
+일반
+D[n] = max(D[n-1], D[n-2]) + sco[n]
+D[n] = max(D[n-3] + sco[n-1] + sco[n], D[n-2] + sco[n])
+'''
 import sys
 input = sys.stdin.readline
 
 n = int(input())
-a = [0]    
+sco = [0]
 for i in range(n):
-    a.append(int(input()))
+    sco.append(int(input()))
 
-g = [0, 0]
-h = [0, a[1]]
-d = [0, 10]
-for i in range(2, n+1):
-    g.append(h[i-1] + a[i])
-    h.append(max(g[i-2],h[i-2]) + a[i])
-    d.append(max(g[i], h[i]))
+D = [0] * (n+1)
+if n == 1:
+    D[1] = sco[1]
+elif n >= 2:
+    D[1], D[2] = sco[1], sco[1] + sco[2]
 
-print(d[n])
+for i in range(3, n+1):
+    D[i] = max(D[i-3] + sco[i-1] + sco[i], D[i-2] + sco[i])
 
-'''
-id 0  1  2  3  4  5  6
-   0 10 20 15 25 10 20
-g  0  0 30 35 50 65 65
-h  0 10 20 25 55 45 75
-f
-
-f(x) = max(g(x), h(x))
-g(x) = h(x-1) + a(x) (idx > 2)
-h(x) = max(g(x-2), h(x-2)) + a(x) (idx >= 2)
-''' 
+print(D[n])

@@ -1,55 +1,42 @@
 '''
-동전 문제 
+# 계단오르기
 
-입력값)
-- 테스트 케이스 : t (10개)
-- 동전의 갯수 : n (20개 이하)
-- 동전의 종류 : unit (10000원 이내)
-- 금액 : m (10,000원 이하())
+- 문제 설명
+ > 계단을 오르면서 각 계단의 점수를 얻는 최대값을 구하라
+ > 계단은 한 계단 or 두 계단
+ > 연속된 세 개의 계단은 모두 밟을 수 없다. 
 
-문제 분석)
-- 동전 unit 돌면서 최소 공배수이면, 따로 처리?
-  : 리스트에 있는 동전의 최소 공배수를 구하는 방법? 한번에 떠오르질 않네
-    => 동전의 경우의 수를 구하는거라 위의 방법과는 관련없음. 
-    (단지 최소 동전의 갯수를 이용할때만 사용)
-    ####################################################
-    시간 복잡도
-    : lcs 재귀함수로 log(N)미만? 따라서 종합적으로는 NlogN이 되지 않을까 생각된다.  
+- 입력값
+ > 계단 수 : n (<=300)
+ > 계단 마다의 점수 : sco (<= 10,000)
 
-    def lcs(a,b):
-    if a % b == 0: return b
-    else: return lcs(b, a%b)
+- 문제 접근
+ > 계단마다 쪼개서 최대값을 구하는 DP문제
+ > 한 계단 전 or 두 계단 전에서 최종
+ > 제약 조건은 연속된 세 개의 계단은 밟을 수 없네
 
-    result = 1
-    for i in units:
-        result = (result * i)/lcs(result, i)
-    if m % result == 0:
-        tmp = 0
-        # 오름차순으로 정렬되어있다는 문제의 가정에 한함
-        for i in range(len(units)-1, -1, -1):
-            tmp += m // units[i]
-            m %= units[i]
-            if m == 0:
-                break
-        print(tmp)
-    ####################################################
-- 동전 경우의 수는 작은 단위의 경우의 수를 이용해나갈 수 있다. 
+점화식은 
+일반
+D[n] = max(D[n-1], D[n-2]) + sco[n]
+D[n] = max(D[n-3] + sco[n-1] + sco[n], D[n-2] + sco[n])
 '''
 import sys
 input = sys.stdin.readline
 
-t = int(input())
-for i in range(t):  
-    n = int(input())
-    units = list(map(int, input().split()))
-    m = int(input())
+n = int(input())
+sco = [0]
+for i in range(n):
+    sco.append(int(input()))
 
-    D = [0] * (m+1)
-    D[0] = 1
-    
-    for unit in units:
-        for i in range(unit, m+1):
-            D[i] += D[i-unit]
+D = [0] * (n+1)
+if n == 1:
+    D[1] = sco[1]
+elif n >= 2:
+    D[1], D[2] = sco[1], sco[1] + sco[2]
 
-    print(D[m])
+for i in range(3, n+1):
+    D[i] = max(D[i-3] + sco[i-1] + sco[i], D[i-2] + sco[i])
+
+print(D[n])
+
 
