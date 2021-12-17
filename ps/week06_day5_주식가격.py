@@ -23,25 +23,25 @@ def solution(prices):
         answer.append(i_ans)
     return answer
 
-# print(solution([100,100,100,100,100]))
+print(solution([100,100,100,100,100]))
 
 # 테스트 성공 (내 풀이)
 # DP를 활용한 문제 풀이 
 # 속도면에서 차이가 없음, 
-def solution(prices):
-    dp = [0] * len(prices)
-    for i in range(len(prices)-1, -1, -1):
-        i_ans = 0
-        # 가격이 위라면 계속 for문 => 여기 떄문에 속도 차이가 없는건가?
-        # 아래 for문을 돌다가 가격이 같다면 dp 활용
-        # 가격이 아래라면 해당
-        for j in range(i+1, len(prices)):
-            i_ans += 1
-            if prices[i] == prices[j]:
-                i_ans = dp[j] + j-i
-                break
-            if prices[i] > prices[j]: break
-        dp[i] = i_ans
-    return dp
+# def solution(prices):
+#     dp = [0] * len(prices)
+#     for i in range(len(prices)-1, -1, -1):
+#         i_ans = 0
+#         # 가격이 위라면 계속 for문 => 여기 떄문에 속도 차이가 없는건가?
+#         # 아래 for문을 돌다가 가격이 같다면 dp 활용
+#         # 가격이 아래라면 해당
+#         for j in range(i+1, len(prices)):
+#             i_ans += 1
+#             if prices[i] == prices[j]:
+#                 i_ans = dp[j] + j-i
+#                 break
+#             if prices[i] > prices[j]: break
+#         dp[i] = i_ans
+#     return dp
 
-print(solution([100,101,102,103,104]))
+# print(solution([100,101,102,103,104]))
