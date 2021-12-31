@@ -30,7 +30,7 @@ def solution(begin, target, words):
 print(solution("hit","cog",	["hot", "dot", "dog", "lot", "log", "cog"]))
 
 
-# from collections import deque
+# from collections import dequegit
 # def solution(begin, target, words):
 #     def match(a, b):
 #         cnt1 = 0
