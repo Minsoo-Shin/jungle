@@ -11,29 +11,39 @@ alpha = ['A', 'B', 'C', 'D' ,'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', '
 
 def solution(name):
     answer = 0
+    length = len(name)
+
     for each in name:
-        answer += alpha.index(each)
-    print(answer)
+        position = alpha.index(each)
+        print(position, abs(26 - position) )
+        answer += min(position, 26 - position)
+
+    print("*******", answer)
+
     q = deque([[0, name, 0]])
     while q:
         temp = q.popleft()
         for dx in [1, -1]:
             s_idx, string, cnt = temp[0], temp[1], temp[2]
-            # while string[s_idx] == 'A':
-            #     s_idx += dx
-            #     cnt += 1
-            # 모든 문자열이 'A'라면 answer += cnt넣고 종료
-            if len(string) == string.count('A'):
+            print(temp)
+            # A가 아닌 부분이 나온다면 A로 변경한다. 
+            if string[s_idx] != 'A':
+                string = string[:s_idx] + 'A' + string[s_idx+1:]
+                print(string)
+            # 다 변경되었는지를 확인한다. 
+            if length == string.count('A'):
                 answer += cnt
                 return answer
-            n_idx = s_idx + dx
-            if string[n_idx] == 'A': cnt += 1
+            # 다 변경 안되었을때 인덱스를 이동하면서 CNT를 늘려준다. 
             else:
-            # A가 아닌 부분이 나온다면 A로 변경하고 q에 넣어준다. 
-                string = string[:n_idx] + 'A' + string[n_idx+1:]
-            q.append([n_idx, string, cnt])
+                n_idx = s_idx + dx
+                cnt += 1
+                # 땜빵은 힘들다. 
+                if  n_idx >= length: n_idx -= length
+                elif n_idx <= -(length+1): n_idx -= length            
+                q.append([n_idx, string, cnt])
 
-print(solution("JAN"))
+print(solution("BCD"))
 
 
 
