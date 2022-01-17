@@ -15,21 +15,21 @@ def solution(name):
 
     for each in name:
         position = alpha.index(each)
-        print(position, abs(26 - position) )
         answer += min(position, 26 - position)
 
-    print("*******", answer)
-
+    #bfs를 돌린다. 
     q = deque([[0, name, 0]])
     while q:
         temp = q.popleft()
         for dx in [1, -1]:
             s_idx, string, cnt = temp[0], temp[1], temp[2]
-            print(temp)
+            # 땜빵은 힘들다 1 (idx가 마이너스가 되면 아래 if문의 string 변경해주는 부분이 에러가 난다.)
+            
+            if s_idx < 0: s_idx += length
             # A가 아닌 부분이 나온다면 A로 변경한다. 
             if string[s_idx] != 'A':
                 string = string[:s_idx] + 'A' + string[s_idx+1:]
-                print(string)
+
             # 다 변경되었는지를 확인한다. 
             if length == string.count('A'):
                 answer += cnt
@@ -38,12 +38,12 @@ def solution(name):
             else:
                 n_idx = s_idx + dx
                 cnt += 1
-                # 땜빵은 힘들다. 
+                # 땜빵은 힘들다 2 (name의 길이 이상을 안 갖도록 미리미리 챙기자)         
                 if  n_idx >= length: n_idx -= length
-                elif n_idx <= -(length+1): n_idx -= length            
+                elif n_idx <= -(length+1): n_idx -= length   
                 q.append([n_idx, string, cnt])
 
-print(solution("BCD"))
+print(solution("ABABAABA"	))
 
 
 
