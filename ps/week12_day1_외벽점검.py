@@ -23,35 +23,47 @@
 #   2차 적은 수는 모두 stack에 저장하고 다시 돌린다.
 #  한번 다 돌리고 나면 인부의 cnt를 += 1
 # 
-from collections import defaultdict
-from dis import dis
+# from collections import defaultdict
+# from dis import dis
+
+# def solution(n, weak, dist):
+#     answer = 0
+#     dist.sort(reverse = True)
+#     # 한 인부로 최대로 점검하여 점검 못한 리스트 줄이기
+#     def rm_weak(d, remainder):
+#         result = defaultdict(list) # {'1' : [rem1, rem2], '2' : ...}
+#         # 갈 수 있는 거리 d와 출발점이 주어지면 지워야할 범위를 구할 수 있다. 
+#         for start in remainder:
+#             include = []
+#             dist_from_start = [0] * len(remainder)
+#             for i in range(len(remainder)):
+#                 dist_from_start[i] = min(remainder[i]-start, n-(remainder[i]-start))
+#             for i, val in enumerate(dist_from_start):
+#                 if val > d:
+#                     include.append(remainder[i])
+#             result[len(include)].append(include) 
+#             # d 반경 안에 있지 않은 것들만 리스트에 담는다. 
+
+#         return remainder
+    
+#     cnt = 0
+#     for i in range(len(dist)): # 인부마다 
+#         remain_weak = rm_weak(dist[i], weak)
+#         cnt += 1
+#         if len(remain_weak) == 0:
+#             return cnt
+#         if i == len(dist)-1 and len(remain_weak) != 0:
+#             return -1
+#     return answer
 
 def solution(n, weak, dist):
+    dist.sort(reverse=True)
+    vis = [True]*n
+    for i in weak:
+        vis[i] = False
+        
+    for d in dist:
+        
     answer = 0
-    dist.sort(reverse = True)
-    # 한 인부로 최대로 점검하여 점검 못한 리스트 줄이기
-    def rm_weak(d, remainder):
-        result = defaultdict(list) # {'1' : [rem1, rem2], '2' : ...}
-        # 갈 수 있는 거리 d와 출발점이 주어지면 지워야할 범위를 구할 수 있다. 
-        for start in remainder:
-            include = []
-            dist_from_start = [0] * len(remainder)
-            for i in range(len(remainder)):
-                dist_from_start[i] = min(remainder[i]-start, n-(remainder[i]-start))
-            for i, val in enumerate(dist_from_start):
-                if val > d:
-                    include.append(remainder[i])
-            result[len(include)].append(include) 
-            # d 반경 안에 있지 않은 것들만 리스트에 담는다. 
 
-        return remainder
-    
-    cnt = 0
-    for i in range(len(dist)): # 인부마다 
-        remain_weak = rm_weak(dist[i], weak)
-        cnt += 1
-        if len(remain_weak) == 0:
-            return cnt
-        if i == len(dist)-1 and len(remain_weak) != 0:
-            return -1
     return answer
